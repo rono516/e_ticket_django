@@ -1,5 +1,5 @@
 from pathlib import Path
-
+import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -33,7 +33,6 @@ INSTALLED_APPS = [
     "apps.item",
     'apps.dashboard'
 ]
-
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -43,6 +42,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+SESSION_COOKIE_AGE = 300 # 5 minutes - Log out user after inactivity in 5 minutes
 
 ROOT_URLCONF = "ecomm.urls"
 
@@ -111,6 +111,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 STATIC_URL = "static/"
+STATICFILES_DIRS = [os.path.join(BASE_DIR,'static'),]
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
