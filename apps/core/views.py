@@ -1,15 +1,15 @@
 from django.shortcuts import render, redirect
-from apps.item.models import Category, Item
+from apps.event.models import Category, Event
 from apps.core.forms import SignupForm
 from django.contrib.auth import logout
 
 
 
 def index(request):
-    items = Item.objects.filter(is_sold=False)[0:8]
+    events = Event.objects.filter(is_sold=False)[0:8]
     categories = Category.objects.all()
     return render(
-        request, "core/index.html", {"categories": categories, "items": items}
+        request, "core/index.html", {"categories": categories, "items": events}
     )
 
 
