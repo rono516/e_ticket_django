@@ -1,32 +1,48 @@
-{% extends "core/base.html" %}
-{% block title %}Browse{% endblock title %}
-{% block content %}
+{% extends "core/base.html" %} {% block title %}Browse{% endblock title %} {% block content %}
 <div class="pb-6 grid md:grid-cols-4 bg-gray-100 gap-4">
-    <div class="md:col-span-1">
-        <form method="get" action="{% url "item:items" %}">
-            <input name="query" class="w-full py-4 px-6 border rounded-xl" type="text" placeholder="Search item" value={{ query }} >
+  <div class="md:col-span-1">
+    <form method="get" action='{% url "item:items" %}'>
+      <input
+        name="query"
+        class="w-full py-4 px-6 border rounded-xl"
+        type="text"
+        placeholder="Search event"
+        value={{query}}
+      >
 
-            <button class="mt-2 py-4 px-8 text-lg bg-teal-500 text-white rounded-xl">Search</button>
-        </form>
+      <button class="mt-2 py-4 px-8 text-lg bg-teal-500 text-white rounded-xl">
+        Search
+      </button>
+    </form>
+  </div>
+  <div class="md:col-span-3">
+    <div class="grid md:grid-cols-3 gap-3">
+      {% for item in items %}
+      <div class="mb-2">
+        <a href='{% url "item:detail" item.id %}'>
+          <div class="">
+            <img
+              src="{{ item.image.url }}"
+              alt="item image"
+              class="rounded-t-xl md:h-80 h-[40vh] w-full"
+            />
+          </div>
+          <div class="p-6 bg-white rounded-b-xl">
+            <div><h2 class="text-xl">{{item.title}}</h2></div>
+            <div><p class="text-gray-500">Ksh. {{item.price}}0</p></div>
+            <div>March 12th, Tuesday 09:00 AM</div>
+            <div>
+              <button
+                class="p-2 mt-2 rounded-xl border-2 w-full hover:bg-teal-500 font-semibold border-black-500"
+              >
+                Get Tickets
+              </button>
+            </div>
+          </div>
+        </a>
+      </div>
+      {% endfor %}
     </div>
-    <div class="md:col-span-3">  <div class="grid md:grid-cols-4 gap-3">
-        {% for item in items %}
-        <div class="mb-2">
-          <a href="{% url "item:detail" item.id %}">
-            <div class="">
-              <img
-                src="{{ item.image.url }}"
-                alt="item image"
-                class="rounded-t-xl h-20 md:h-36 w-full"
-              />
-            </div>
-            <div class="p-6 bg-white rounded-b-xl">
-              <h2 class="text-2xl">{{item.title}}</h2>
-              <p class="text-gray-500">Ksh. {{item.price}}0</p>
-            </div>
-          </a>
-        </div>
-        {% endfor %}
-      </div></div>
+  </div>
 </div>
 {% endblock content %}

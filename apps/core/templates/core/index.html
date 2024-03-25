@@ -5,11 +5,11 @@
   <div class="grid grid-cols-2 items-center">
     <div class="px-6">
       <div>
-        <h2 class="text-3xl font-bold">Grab amazing offers this Easter</h2>
+        <h2 class="text-3xl font-bold">Book amazing events on offer</h2>
       </div>
-      <div class="mt-3">
-        <button class="font-bold bg-teal-500 px-6 py-3 rounded-full">
-          Buy now
+      <div class="mt-8">
+        <button class="font-bold bg-teal-500 hover:bg-teal-700 hover:text-white px-6 py-3 rounded-full">
+          Book now
         </button>
       </div>
     </div>
@@ -17,14 +17,15 @@
       {% load static %}
       <img
         class="h-32 w-32"
-        src="{% static 'assets/trolley.svg' %}"
+        src="{% static 'assets/interview.svg' %}"
         alt="Home image"
       />
     </div>
   </div>
 </div>
+{% comment %}
 <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
-  {% comment %} <h2 class="mb-12 text-2xl font-bold">Browse Categories</h2> {% endcomment %}
+  <h2 class="mb-12 text-2xl font-bold">Browse Categories</h2>
   <div class="grid grid-cols-4 gap-3">
     {% for category in categories %}
     <div class="mb-2">
@@ -38,8 +39,9 @@
     {% endfor %}
   </div>
 </div>
+{% endcomment %}
 <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
-  <h2 class="mb-12 text-2xl font-bold">Newest items you might like</h2>
+  <h2 class="mb-12 text-2xl font-bold">Newest events for you</h2>
   <div class="grid md:grid-cols-4 gap-3">
     {% for item in items %}
     <div class="mb-2">
@@ -48,19 +50,18 @@
           <img
             src="{{ item.image.url }}"
             alt="item image"
-            class="rounded-t-xl md:h-36 mx-auto w-full"
+            class="rounded-t-xl md:h-80 h-[40vh] mx-auto w-full"
           />
         </div>
         <div class="p-6 bg-white rounded-b-xl">
-          <div class="flex justify-between items-center">
-            <div><h2 class="text-xl">{{item.title}}</h2></div>
-            <div><p class="text-gray-500">Ksh. {{item.price}}0</p></div>
-          </div>
+          <div><h2 class="text-xl">{{item.title}}</h2></div>
+          <div><p class="text-gray-500">Ksh. {{item.price}}0</p></div>
+          <div>March 12th, Tuesday 09:00 AM</div>
           <div>
             <button
-              class="p-2 mt-2 rounded-xl border-2 hover:bg-teal-500 font-semibold border-black-500"
+              class="p-2 mt-2 rounded-xl border-2 w-full hover:bg-teal-500 font-semibold border-black-500"
             >
-              Add to Cart
+              Get Tickets
             </button>
           </div>
         </div>
