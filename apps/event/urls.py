@@ -10,4 +10,6 @@ urlpatterns = [
     path("<int:pk>/", views.detail, name="detail"),
     path("<int:pk>/delete", views.delete, name="delete"),
     path("<int:pk>/edit", views.edit, name="edit"),
+    path("stk_push", views.stk_push, name="stk_push"),
+    path("daraja/stk_push", views.stk_push_callback, name="stk_push_callback"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
