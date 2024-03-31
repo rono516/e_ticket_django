@@ -85,7 +85,7 @@ def stk_push(request):
     amount = 1
     account_reference = 'reference'
     transaction_desc = 'Description'
-    callback_url = 'https://1e78-197-231-183-90.ngrok-free.app/api/mpesa/callback'
+    callback_url = 'https://rono516.pythonanywhere.com/items/daraja/stk_push'
     response = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
     print(response.content)
     return HttpResponse(response)
@@ -110,3 +110,19 @@ def stk_push_callback(request):
     except Exception as e:
         logging.error(f"Error processing M-Pesa callback: {str(e)}")
         return HttpResponse(status=500)
+
+import requests
+from requests.auth import HTTPBasicAuth
+import json
+request = ""
+def getAccessToken(self):
+    consumer_key = "nk16Y74eSbTaGQgc9WF8j6FigApqOMWr"
+    consumer_secret = "40fD1vRXCq90XFaU"
+    api_url = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
+    r= requests.get(api_url,auth=HTTPBasicAuth(consumer_key,consumer_secret))
+    mpesa_access_token = json.loads(r.text)
+    validated_access_token =mpesa_access_token['access_token']
+
+    print(validated_access_token)
+    return HttpResponse(validated_access_token)
+
