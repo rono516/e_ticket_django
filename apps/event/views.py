@@ -5,7 +5,7 @@ from .forms import NewItemForm, UpdateItemForm
 from django.http import HttpResponse
 from django_daraja.mpesa.core import MpesaClient
 import logging
-
+from mpesa import LipaNaMpesaOnline
 # Set up logging
 logging.basicConfig(filename='daraja.log', level=logging.INFO)
 
@@ -77,26 +77,12 @@ def delete(request, pk):
 
     return redirect("dashboard:index")
 
-@login_required
-def stk_push(request):
-    cl = MpesaClient()
-    # Use a Safaricom phone number that you have access to, for you to be able to view the prompt.
-    phone_number = '0792009556'
-    amount = 1
-    account_reference = 'reference'
-    transaction_desc = 'Description'
-    callback_url = 'https://rono516.pythonanywhere.com/items/daraja/stk_push'
-    response = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
-    print(response.content)
-    return HttpResponse(response)
 # @login_required
-# def stk_push_callback(request):
-#         data = request.body
+def stk_push(request):
+    response = LipaNaMpesaOnline.sendSTK(amount=1, phone_number="254792009556",orderId=0,transaction_id=None,shortcode=174379,account_number=None)
 
-#         print(data)
+    return HttpResponse(response)
 
-#         return HttpResponse("STK Push in Django👋")
-@login_required
 def stk_push_callback(request):
     try:
         # Read the callback data
@@ -120,9 +106,13 @@ def getAccessToken(self):
     consumer_secret = "40fD1vRXCq90XFaU"
     api_url = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
     r= requests.get(api_url,auth=HTTPBasicAuth(consumer_key,consumer_secret))
-    mpesa_access_token = json.loads(r.text)
-    validated_access_token =mpesa_access_token['access_token']
 
-    print(validated_access_token)
-    return HttpResponse(validated_access_token)
+    if r.status_code == 200:
+
+        mpesa_access_token = json.loads(r.text)
+        validated_access_token =mpesa_access_token['access_token']
+        return validated_access_token
+    elif r.status_code == 400:
+        print("Invalid credentials")
+        return False
 

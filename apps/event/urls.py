@@ -12,5 +12,5 @@ urlpatterns = [
     path("<int:pk>/edit", views.edit, name="edit"),
     path("stk_push", views.stk_push, name="stk_push"),
     path("daraja/stk_push", views.stk_push_callback, name="stk_push_callback"),
-    path("mpesa_access_token", views.getAccessToken, name="mpesa_access_token"),
+    # path("mpesa_access_token", views.getAccessToken, name="mpesa_access_token"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -34,6 +34,8 @@ INSTALLED_APPS = [
     "apps.event",
     "apps.dashboard",
     "django_daraja",
+    "mpesa",
+    "rest_framework",
 ]
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -131,6 +133,8 @@ MPESA_ENVIRONMENT = "sandbox"
 MPESA_CONSUMER_KEY = "nk16Y74eSbTaGQgc9WF8j6FigApqOMWr"
 MPESA_CONSUMER_SECRET = "40fD1vRXCq90XFaU"
 
+CONSUMER_KEY="nk16Y74eSbTaGQgc9WF8j6FigApqOMWr"
+CONSUMER_SECRET="40fD1vRXCq90XFaU"
 # Shortcode to use for transactions. For sandbox  use the Shortcode 1 provided on test credentials page
 
 MPESA_SHORTCODE = "174379"
@@ -164,40 +168,42 @@ MPESA_INITIATOR_SECURITY_CREDENTIAL = "Safaricom999!*!"
 
 
 LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-         'verbose': {
-            'format': ('%(asctime)s [%(process)d] [%(levelname)s] ' +
-                       'pathname=%(pathname)s lineno=%(lineno)s ' +
-                       'funcname=%(funcName)s %(message)s'),
-            'datefmt': '%Y-%m-%d %H:%M:%S'
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": (
+                "%(asctime)s [%(process)d] [%(levelname)s] "
+                + "pathname=%(pathname)s lineno=%(lineno)s "
+                + "funcname=%(funcName)s %(message)s"
+            ),
+            "datefmt": "%Y-%m-%d %H:%M:%S",
         },
-        'simple': {
-            'format': '{asctime} {message}',
-            'style': '{',
+        "simple": {
+            "format": "{asctime} {message}",
+            "style": "{",
         },
     },
-    'handlers': {
-        'file': {
-            'level': 'INFO',
-            'class': 'logging.handlers.RotatingFileHandler',
-            'filename': os.path.join(BASE_DIR, 'daraja.log'),
-            'formatter': 'simple',
-            'maxBytes': 1024*1024*15, # 15MB
-            'backupCount': 10,
+    "handlers": {
+        "file": {
+            "level": "INFO",
+            "class": "logging.handlers.RotatingFileHandler",
+            "filename": os.path.join(BASE_DIR, "daraja.log"),
+            "formatter": "simple",
+            "maxBytes": 1024 * 1024 * 15,  # 15MB
+            "backupCount": 10,
         },
-        'console': {
-            'level': 'DEBUG',
-            'class': 'logging.StreamHandler',
-            'formatter': 'verbose'
-        }
+        "console": {
+            "level": "DEBUG",
+            "class": "logging.StreamHandler",
+            "formatter": "verbose",
+        },
     },
-    'loggers': {
-        'daraja': {
-            'handlers': ['console', 'file'],
-            'level': 'INFO',
-            'propagate': True,
+    "loggers": {
+        "daraja": {
+            "handlers": ["console", "file"],
+            "level": "INFO",
+            "propagate": True,
         },
     },
 }
