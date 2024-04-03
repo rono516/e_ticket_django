@@ -1,11 +1,11 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, redirect
-from .models import Event
+from .models import Event, MpesaResponseBody
 from .forms import NewItemForm, UpdateItemForm
 from django.http import HttpResponse
-from django_daraja.mpesa.core import MpesaClient
 import logging
 from mpesa import LipaNaMpesaOnline
+import os
 # Set up logging
 logging.basicConfig(filename='daraja.log', level=logging.INFO)
 
@@ -77,25 +77,48 @@ def delete(request, pk):
 
     return redirect("dashboard:index")
 
-# @login_required
+@login_required
 def stk_push(request):
     response = LipaNaMpesaOnline.sendSTK(amount=1, phone_number="254792009556",orderId=0,transaction_id=None,shortcode=174379,account_number=None)
 
     return HttpResponse(response)
 
+# def stk_push_callback(request):
+#     try:
+#         # Read the callback data
+#         data = request.body.decode('utf-8')
+#         logging.info(f"Received M-Pesa callback data: {data}")
+
+#         # Process the callback data (e.g., update transaction status, log details, etc.)
+#         # ...
+
+#         return HttpResponse("STK Push in Django 👋")
+#     except Exception as e:
+#         logging.error(f"Error processing M-Pesa callback: {str(e)}")
+#         return HttpResponse(status=500)
+
 def stk_push_callback(request):
-    try:
-        # Read the callback data
-        data = request.body.decode('utf-8')
-        logging.info(f"Received M-Pesa callback data: {data}")
+    body = request.data
+    if body:
+        mpesa = MpesaResponseBody.objects.create(body=body)
+        mpesa_body =mpesa.body
 
-        # Process the callback data (e.g., update transaction status, log details, etc.)
-        # ...
+        current_directory = os.path.dirname(os.path.realpath(__file__))
+        file_path = os.path.join(current_directory, 'mpesa_body.txt')
 
-        return HttpResponse("STK Push in Django 👋")
-    except Exception as e:
-        logging.error(f"Error processing M-Pesa callback: {str(e)}")
-        return HttpResponse(status=500)
+        # Write the mpesa_body to the text file
+        with open(file_path, 'w') as file:
+            file.write(str(mpesa_body))
+
+        # if mpesa_body['stkCallback']['ResultCode'] == 0:
+        #         transaction = Transaction.objects.create(
+        #             phonenumber=mpesa_body['Body']['stkCallback']['CallbackMetadata']['Item'][-1]["Value"],
+        #             amount=mpesa_body['Body']['stkCallback']['CallbackMetadata']['Item'][0]["Value"],
+        #             receipt_no=mpesa_body['Body']['stkCallback']['CallbackMetadata']['Item'][1]["Value"]
+        #         )
+
+        #     return response.Response({"message": "Callback Data received and processed successfully."})
+        # return response.Response({"failed": "No Callback Data Received"}, status=status.HTTP_400_BAD_REQUEST)
 
 import requests
 from requests.auth import HTTPBasicAuth

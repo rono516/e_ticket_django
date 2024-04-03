@@ -4,6 +4,14 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
+class AbstractBaseModel(models.Model):
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        abstract = True
+
+
 class Category(models.Model):
     name = models.CharField(max_length=255)
 
@@ -29,3 +37,7 @@ class Event(models.Model):
 
     def __str__(self) -> str:
         return f"{self.title} in {self.category}"
+
+
+class MpesaResponseBody(AbstractBaseModel):
+    body = models.JSONField()
