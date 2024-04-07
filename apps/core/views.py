@@ -4,7 +4,6 @@ from apps.core.forms import SignupForm
 from django.contrib.auth import logout
 
 
-
 def index(request):
     events = Event.objects.filter(is_sold=False)[0:8]
     categories = Category.objects.all()
@@ -28,7 +27,20 @@ def signup(request):
         form = SignupForm()
 
     return render(request, "core/signup.html", {"form": form})
+
+
+def about_us(request):
+    return render(request, "core/about.html")
+
+
+def terms_of_service(request):
+    return render(request, "core/terms.html")
+
+
+def privacy_policy(request):
+    return render(request, "core/privacy.html")
+
+
 def logout_view(request):
     logout(request)
     return redirect("/")
-

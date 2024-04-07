@@ -1,19 +1,56 @@
 {% extends "core/base.html" %} {% block title %}Welcome{% endblock title %}
 {%block content %}
 
-<div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
-  <div class="grid grid-cols-2 items-center">
-    <div class="px-6">
+<div class="mt-6 px-6 bg-red-100 py-12 h-[30vh] md:h-[50vh] rounded-xl">
+  <div class="flex justify-center">
+    <div class="">
       <div>
-        <h2 class="text-3xl font-bold">Book amazing events on offer</h2>
+        <h2 class="text-3xl text-center font-bold">Book amazing events on offer</h2>
       </div>
-      <div class="mt-8">
-        <button class="font-bold bg-teal-500 hover:bg-teal-700 hover:text-white px-6 py-3 rounded-full">
+      <div class="mt-8 md:py-12 rounded-lg md:px-12 ">
+        <form>
+          <div class="md:flex space-y-1 md:space-y-0">
+            <div>
+              <input
+                type="text "
+                class="w-full md:w-auto p-2"
+                name=""
+                id=""
+                placeholder="Search By Name..."
+              />
+            </div>
+            <div>
+              <select class="p-2 w-full md:w-auto" name="cars" id="cars">
+                <option class="p-2 w-full md:w-auto" value="volvo" selected disabled>Category</option>
+                <option class="p-2 w-full md:w-auto" value="volvo">Sports</option>
+                <option class="p-2 w-full md:w-auto" value="saab">Technology</option>
+              </select>
+            </div>
+            <div>
+              <input
+              class="w-full md:w-auto p-2"
+                type="text"
+                name=""
+                id=""
+                placeholder="Search By Time..."
+              />
+            </div>
+            <div class="px-4 font-bold flex justify-center bg-violet-950 text-white">
+              <button>Search</button>
+            </div>
+          </div>
+        </form>
+        {% comment %}
+        <button
+          class="font-bold bg-teal-500 hover:bg-teal-700 hover:text-white py-3 rounded-lg md:rounded-full"
+        >
           Book now
         </button>
+        {% endcomment %}
       </div>
     </div>
-    <div class="mx-auto">
+    {% comment %}
+    <div class="md:mx-auto hidden">
       {% load static %}
       <img
         class="h-32 w-32"
@@ -21,55 +58,81 @@
         alt="Home image"
       />
     </div>
+    {% endcomment %}
   </div>
 </div>
-{% comment %}
-<div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
-  <h2 class="mb-12 text-2xl font-bold">Browse Categories</h2>
-  <div class="grid grid-cols-4 gap-3">
-    {% for category in categories %}
-    <div class="mb-2">
-      <a href="#">
-        <div class="p-6 bg-white rounded-b-xl">
-          <h2 class="text-2xl">{{category.name}}</h2>
-          <p class="text-gray-500">{{category.items.count}} item(s)</p>
-        </div>
-      </a>
-    </div>
-    {% endfor %}
-  </div>
-</div>
-{% endcomment %}
-<div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
+<div class="mt-6 px-6 py-12 rounded-xl">
   <h2 class="mb-12 text-2xl font-bold">Newest events for you</h2>
   <div class="grid md:grid-cols-4 gap-3">
     {% for item in items %}
-    <div class="mb-2 hover:border border-slate-800 rounded-xl">
+    <div class="mb-2 border bg-white border-slate-300 rounded-xl">
       <a href='{% url "item:detail" item.id %}'>
         <div class="">
           {% if item.image %}
-              <img
-                src="{{ item.image.url }}"
-                alt="item image"
-                class="rounded-t-xl md:h-80 h-[40vh] mx-auto w-full"
-              />
-           {% endif  %}
+          <img
+            src="{{ item.image.url }}"
+            alt="item image"
+            class="rounded-t-xl md:h-50 h-[30vh] mx-auto w-full"
+          />
+          {% endif %}
         </div>
         <div class="p-6 bg-white rounded-b-xl">
-          <div><h2 class="text-xl">{{item.title}}</h2></div>
-          <div><p class="text-gray-500">Ksh. {{item.price}}0</p></div>
-          <div>March 12th, Tuesday 09:00 AM</div>
-          <div>
-            <button
-              class="p-2 mt-2 rounded-xl border-2 w-full hover:bg-teal-500 font-semibold border-black-500"
-            >
-              Get Tickets
-            </button>
+          <div><h2 class="font-bold text-xl">{{item.title}}</h2></div>
+
+          <div class="text-sm mt-3 font-semibold">
+            March 12th, Tuesday 09:00 AM
+          </div>
+          <div class="flex">
+            <div class="">
+              <svg
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
+                <g
+                  id="SVGRepo_tracerCarrier"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                ></g>
+                <g id="SVGRepo_iconCarrier">
+                  <path
+                    d="M23 12C23 18.0751 18.0751 23 12 23C5.92487 23 1 18.0751 1 12C1 5.92487 5.92487 1 12 1C18.0751 1 23 5.92487 23 12ZM3.00683 12C3.00683 16.9668 7.03321 20.9932 12 20.9932C16.9668 20.9932 20.9932 16.9668 20.9932 12C20.9932 7.03321 16.9668 3.00683 12 3.00683C7.03321 3.00683 3.00683 7.03321 3.00683 12Z"
+                    fill="#0F0F0F"
+                  ></path>
+                  <path
+                    d="M12 5C11.4477 5 11 5.44771 11 6V12.4667C11 12.4667 11 12.7274 11.1267 12.9235C11.2115 13.0898 11.3437 13.2343 11.5174 13.3346L16.1372 16.0019C16.6155 16.278 17.2271 16.1141 17.5032 15.6358C17.7793 15.1575 17.6155 14.5459 17.1372 14.2698L13 11.8812V6C13 5.44772 12.5523 5 12 5Z"
+                    fill="#0F0F0F"
+                  ></path>
+                </g>
+              </svg>
+            </div>
+
+            <div class="text-sm mt-3 font-semibold">Accra Road, Nairobi</div>
+          </div>
+          <div class="flex mt-4 items-center justify-between">
+            <div><p class="text-xl">Ksh. {{item.price}}0</p></div>
+            <div>
+              <button
+                class="rounded-sm py-1 hover:bg-red-200 px-4 border-2 border-black-500"
+              >
+                Get Tickets
+              </button>
+            </div>
           </div>
         </div>
       </a>
     </div>
     {% endfor %}
+  </div>
+</div>
+
+<div class="mt-6 px-6 py-12 rounded-xl">
+  <div class="flex items-center md:w-3/12 mx-auto bg-red-100 justify-center">
+    <div class="uppercase">
+      <a href="">see more events </a>
+    </div>
+    <div class="uppercase mb-1 text-3xl">&rarr;</div>
   </div>
 </div>
 

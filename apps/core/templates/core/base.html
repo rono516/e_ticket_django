@@ -5,54 +5,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <title>{% block title %}{% endblock title %} | E-ticket</title>
+    <title>{% block title %}{% endblock title %} | Tickety</title>
   </head>
   <body>
     <nav
-      class="py-6 px-6 flex justify-between items-center border-b border-gray-200"
+      class="py-8 px-6 md:flex md:justify-between md:text-white uppercase md:bg-violet-950 items-center border-b border-gray-200"
     >
-      <a href='{% url "core:index" %}' class="text-xl font-semibold">E-ticket</a>
-      {% comment %} <a href='{% url "core:index" %}' class="text-xl font-semibold">Deals</a>
-      <a href='{% url "core:index" %}' class="text-xl font-semibold">Delivery</a> {% endcomment %}
-      <div class="md:space-x-16">
-
-
-        <a
-          href='{% url "item:items" %}'
-          class="text-lg font-semibold hover:text-gray-500"
-          >Browse More Events</a
-        >
-
+      <div class="flex items-center justify-between">
+        <div class="">
+          <a
+            href='{% url "core:index" %}'
+            class="text-2xl md:text-white font-bold"
+            >Tickety</a
+          >
+        </div>
+        <div class="md:hidden">
+          <button
+            onclick="toggleMenu()"
+            id="menu-toggle"
+            class="block text-gray-500 hover:text-gray-600 focus:outline-none focus:text-gray-600"
+          >
+            <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
+              <path
+                fill-rule="evenodd"
+                clip-rule="evenodd"
+                d="M4 6h16a1 1 0 010 2H4a1 1 0 010-2zm16 5H4a1 1 0 110-2h16a1 1 0 110 2zm0 4H4a1 1 0 110-2h16a1 1 0 110 2z"
+              ></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+      <div
+        id="menu-responsive"
+        class="md:space-x-16 hidden md:flex space-y-10 md:space-y-0"
+      >
         {% if request.user.is_authenticated %}
 
-        <a
-          href='{% url "dashboard:index" %}'
-          class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700"
-          >Dashboard</a
-        >
-        <a
-          href='{% url "core:logout" %}'
-          class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700"
-          >Log out</a
-        >
+        <div>
+          <a
+            href='{% url "core:logout" %}'
+            class="px-6 py-3 text-lg font-semibold md:text-white rounded-xl"
+            >Log out</a
+          >
+        </div>
         {% else %}
-        <a
-          href='{% url "core:signup" %}'
-          class="px-6 py-3 text-lg font-semibold bg-teal-500 text-white rounded-xl hover:bg-teal-700"
-          >Sign Up</a
-        >
-        <a
-          href='{% url "core:login" %}'
-          class="px-6 py-3 text-lg font-semibold bg-gray-500 text-white rounded-xl hover:bg-gray-700"
-          >Log In</a
-        >
+        <div>
+          <a
+            href='{% url "core:signup" %}'
+            class="md:px-6 py-3 text-lg font-semibold md:text-white rounded-xl"
+            >Sign Up</a
+          >
+        </div>
+        <div>
+          <a
+            href='{% url "core:login" %}'
+            class="md:px-6 py-3 text-lg font-semibold md:text-white rounded-xl"
+            >Log In</a
+          >
+        </div>
+
         {% endif %}
+        <div>
+          <a
+            href='{% url "core:contact" %}'
+            class="md:px-6 py-3 text-lg font-semibold md:text-white rounded-xl"
+            >Contact</a
+          >
+        </div>
+        <div>
+          <a
+            href='{% url "dashboard:index" %}'
+            class="md:px-6 py-3 text-lg font-semibold md:text-white rounded-xl"
+            >Dashboard</a
+          >
+        </div>
+        <div>
+          <a
+            href='{% url "item:items" %}'
+            class="text-lg font-semibold md:border border-white md:p-2 hover:bg-white hover:text-violet-950 rounded-lg"
+            >More Events</a
+          >
+        </div>
       </div>
     </nav>
     <div class="px-6 py-6">{% block content %}{% endblock content %}</div>
     <footer class="py-6 px-6 flex justify-between bg-gray-800">
       <div class="w-2/3 pr-10">
-        <h3 class="mb-5 font-semibold text-gray-400">E-ticket</h3>
+        <h3 class="mb-5 font-semibold text-gray-400">Tickety</h3>
         <p class="text-lg text-gray-500">
           Here is a small description about e-commerce
         </p>
@@ -61,7 +100,9 @@
         <h3 class="mb-5 font-semibold text-gray-400">Quick Links</h3>
         <ul class="space-y-2">
           <li>
-            <a href="" class="text-lg text-teal-500 hover:text-teal-700"
+            <a
+              href='{% url "core:about_us" %}'
+              class="text-lg text-teal-500 hover:text-teal-700"
               >About</a
             >
           </li>
@@ -86,6 +127,16 @@
       </div>
     </footer>
 
+    <script>
+      function toggleMenu() {
+        var menu = document.getElementById("menu-responsive");
+        if (menu.style.display === "none" || menu.style.display === "") {
+          menu.style.display = "block";
+        } else {
+          menu.style.display = "none";
+        }
+      }
+    </script>
     {% block js %}{% endblock js %}
   </body>
 </html>

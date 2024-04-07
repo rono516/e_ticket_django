@@ -3,12 +3,12 @@
 <a
   href='{% url "item:new" %}'
   class="text-lg bg-teal-500 hover:bg-teal-700 px-2 py-3 rounded-xl font-semibold hover:text-white"
-  >New Item</a
+  >New Event</a
 >
 {% endif %}
 
 <div class="mt-6 px-6 py-12 bg-gray-100 rounded-xl">
-  <h2 class="mb-12 text-2xl text-center">My items</h2>
+  <h2 class="mb-12 text-2xl text-center">My events</h2>
   <div class="grid grid-cols-4 gap-3">
     {% for item in items %}
     <div class="mb-2">
@@ -17,7 +17,7 @@
           <img
             src="{{ item.image.url }}"
             alt="item image"
-            class="rounded-t-xl w-full"
+            class="rounded-t-xl md:h-80 h-[40vh] w-full"
           />
         </div>
         <div class="p-6 bg-white rounded-b-xl">
