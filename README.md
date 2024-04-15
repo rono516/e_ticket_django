@@ -1,1 +1,1 @@
-"# eticketerce_django"
+e-ticketing application django
